@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+   <head>
+      <meta http-equiv="refresh" content="2">
+      <title>{{ title }}</title>
+      <link rel="stylesheet" href="/static/style.css">
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+   </head>
+
+  
+
+   <body>
+      <div class="top">
+         <h1>{{ title }}</h1>
+         <p>Python Webserver to Control Things in Your Home</p>
+      </div>
+      <div class="wrapper">
+            
+      <p ></p>
+      
+      <p ></p>
+      <h1>SENSOR DATA</h1>
+      <p>Temperature:  {{ temperature }} F</p>
+      <p>Humidity:  {{ humidity }} %</p>
+      <p>Pressure:  {{ pressure }} mbar</p>
+   
+  
+   <h1 class="led">LED STATUS</h1>
+      <p>Red LED Status:  {{ ledRed }} </p>
+      <a href="/ledRed/on" class="button">TURN ON</a>
+      <a href="/ledRed/off" class="button">TURN OFF</a>
+      <p>Green LED Status:  {{ ledGreen }} </p>
+      <a href="/ledGreen/on" class="button">TURN ON</a>
+      <a href="/ledGreen/off" class="button">TURN OFF</a>
+      <p>Blue LED Status:  {{ ledBlue }} </p>
+      <a href="/ledBlue/on" class="button">TURN ON</a>
+      <a href="/ledBlue/off" class="button">TURN OFF</a>
+      <div class="line"></div>
+      <h1 class="light">LIGHT BULB CONTROL</h1>
+      <p>Name {{ ledBlue }} </p>
+      <a href="/ledBlue/on" class="button">TURN ON</a>
+      <a href="/ledBlue/off" class="button">TURN OFF</a>
+      <h4>The date and time on the server is: {{ time }}</h4>
+  
+
+</div>
+
+
+   </body>
+</html>
