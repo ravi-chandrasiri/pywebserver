@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from sense_hat import SenseHat
+import RPi.GPIO as GPIO
 import datetime
 
 app = Flask(__name__)
@@ -7,6 +8,15 @@ app = Flask(__name__)
 sense = SenseHat()
 sense.set_rotation(180)
 sense.clear()
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+lightBulb = 14
+lightBulbSts = GPIO.LOW
+
+GPIO.setup(lightBulb, GPIO.OUT)
+GPIO.output(lightBulb, GPIO.LOW)
 
 #sense.show_message("Project")
 
@@ -31,6 +41,11 @@ def action(deviceName, action):
         sense.set_pixel(4,4,(0,0,255))
     if (deviceName == 'ledBlue') & (action == "off"):
         sense.set_pixel(4,4,(0,0,0))
+        
+    if (deviceName == 'lightBulb') & (action == "on"):
+        GPIO.output(lightBulb, GPIO.HIGH)
+    if (deviceName == 'lightBulb') & (action == "off"):
+        GPIO.output(lightBulb, GPIO.LOW)
     
     templateData = getData()
     return render_template('index.html', **templateData)
@@ -50,6 +65,7 @@ def getData():
     redledData = getRedLedData()
     greenledData = getGreenLedData()
     blueledData = getBlueLedData()
+    lightBulbData = getLightBulbData()
     
     templateData = {
         'title' : 'Final Project - EE-551-WS Engineering Python',
@@ -59,7 +75,8 @@ def getData():
         'pressure': pressure,
         'ledRed':redledData,
         'ledGreen':greenledData,
-        'ledBlue':blueledData
+        'ledBlue':blueledData,
+        'lightBulb': lightBulbData
         }
     return templateData
 
@@ -89,6 +106,14 @@ def getBlueLedData():
     if blue_on < 200:
         ledBlueSts = 'OFF'
     return ledBlueSts
+
+def getLightBulbData():
+    lightBulbStatus = GPIO.input(lightBulb)
+    if lightBulbStatus == 1:
+        lightBulbSts = 'ON'
+    if lightBulbStatus == 0:
+        lightBulbSts = 'OFF'
+    return lightBulbSts
 
 if __name__ == '__main__':
     #app.run(host = '10.69.188.131')
